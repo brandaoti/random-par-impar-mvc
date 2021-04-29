@@ -1,6 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:random_par_impar_mvc/app/components/round_component.dart';
+import 'package:random_par_impar_mvc/app/components/texts/text_component.dart';
+
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import '../components/buttons/button_component.dart';
+import '../components/bottom_navigator_component.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -41,52 +46,26 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildRoundComponent(newRandom.toString()),
+                RoundComponent(data: newRandom.toString()),
 
                 // ? Verifica se o valor é PAR ou IMPAR
                 // ? Instancia o Text de acordo com o resultado
-                ehPar ? Text(par) : Text(impar),
+                ehPar ? TextComponent(data: par) : TextComponent(data: impar),
               ],
             ),
           ),
 
           //
-          Container(
-            height: 100,
-            color: Colors.blue,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildButtonComponent('Restart', restart),
-              ],
-            ),
+          BottomNavigatorComponent(
+            children: [
+              ButtonComponent(
+                data: 'Restart',
+                onPressed: () => restart(),
+              ),
+            ],
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildButtonComponent(String label, Function onFunction) {
-    return ElevatedButton(
-      child: Text(label),
-      style: ElevatedButton.styleFrom(
-        primary: Colors.orange,
-        onPrimary: Colors.white,
-      ),
-      onPressed: onFunction,
-    );
-  }
-
-  Widget _buildRoundComponent(String value) {
-    return Container(
-      height: 100,
-      width: 100,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.orange,
-        shape: BoxShape.circle,
-      ),
-      child: Text('$value'),
     );
   }
 }
